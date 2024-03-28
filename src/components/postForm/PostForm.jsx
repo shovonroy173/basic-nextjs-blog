@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { addPost } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 const PostForm = ({ session }) => {
   const [state, formAction] = useFormState(addPost, {});
   const userEmail = session.user.email;
-  console.log(userEmail);
+  console.log("LINE AT 9" , state);
+  const router = useRouter();
+  useEffect(()=>{
+    state.success && router.push("/blog");
+  } , [state.success]);
   return (
     <div className="flex flex-col justify-center items-center space-y-5">
       <form action={formAction} className="flex flex-col justify-center items-center space-y-5">
