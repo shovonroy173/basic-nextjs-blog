@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 
 // Separate login function
 const login = async (credentials) => {
-  console.log(credentials);
+
   try {
     connectToDb();
     const user = await User.findOne({ name: credentials.name });
@@ -51,7 +51,7 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  secret: process.env.AUTH_SECRET || "your-secret-string-here",
+  secret: process.env.NEXTAUTH_SECRET || "your-secret-string-here",
   callbacks: async ({ user, account, profile }) => {
     console.log("LINE AT 15 AUTH.JS", user, account, profile);
     if (account.provider === "github") {
