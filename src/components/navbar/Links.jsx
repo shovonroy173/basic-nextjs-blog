@@ -1,22 +1,25 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logout } from "@/lib/actions";
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const links = [
   { path: "/about", description: "About page description", title: "About" },
   { path: "/blog", description: "Blog page description", title: "Blog" },
-  {
-    path: "/contact",
-    description: "Contact page description",
-    title: "Contact",
-  },
+
 ];
+import  {useRouter} from "next/navigation"
 
 const Links = ({ session }) => {
   const pathName = usePathname();
-  console.log("LINE AT 18", session);
+  // console.log("LINE AT 18", session);
+  const router = useRouter();
+  useEffect(()=>{
+    !session && router.push("/login");
+  } , [session]);
 
   return (
     <div className="flex justify-between w-[500px]">
@@ -37,13 +40,14 @@ const Links = ({ session }) => {
           href="/dashboard"
 
           className={
-            "/dashboard" === pathName && "text-cyan-950 font-semibold"
+            "/dashboard" === pathName && "text-cyan-950 font-semibold text-center"
           }
         >
           Dashboard
+          <AccountCircleIcon/>
         </Link>
         <form action={logout}>
-          <button>Logout</button>
+          <button><LogoutIcon/></button>
         </form>
         </>
       ) : (
